@@ -1,3 +1,21 @@
 from django.contrib import admin
+from .models import Course, Lesson, Question, Choice, Enrollment, Submission
 
-# Register your models here.
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+
+class QuestionInline(admin.TabularInline):
+    model = Question
+
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [ChoiceInline]
+
+class LessonAdmin(admin.ModelAdmin):
+    inlines = [QuestionInline]
+
+admin.site.register(Course)
+admin.site.register(Lesson, LessonAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+admin.site.register(Enrollment)
+admin.site.register(Submission)
